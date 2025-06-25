@@ -3,7 +3,7 @@ import '../css/EventCard.css';
 
 const EventCard = ({ event }) => {
     return (
-        <div className="event-card">
+        <div className="card">
             {event.image && (
                 <div className="event-card-image-container">
                     <img
