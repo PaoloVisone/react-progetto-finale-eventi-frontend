@@ -12,7 +12,7 @@ const Home = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(API_BASE_URL);
+                const response = await axios.get(`${API_BASE_URL}/events`);
                 // Log per capire la struttura della risposta
                 setEvents(response.data.data || response.data);
                 console.log('API response:', response.data);
@@ -48,20 +48,20 @@ const Home = () => {
     }
 
     return (
-        <div className="home">
-            <div className="carousel-container">
-                <div
-                    className="carousel-track"
-                    style={{ transform: `translateX(-${current * 100}%)` }}
-                >
-                    {events.map(event => (
-                        <div key={event.id} className="carousel-slide">
-                            <EventCard event={event} />
-                        </div>
-                    ))}
-                </div>
+        // <div className="home">
+        <div className="carousel-container">
+            <div
+                className="carousel-track"
+                style={{ transform: `translateX(-${current * 100}%)` }}
+            >
+                {events.map(event => (
+                    <div key={event.id} className="carousel-slide">
+                        <EventCard event={event} />
+                    </div>
+                ))}
             </div>
         </div>
+        // </div >
     );
 };
 
