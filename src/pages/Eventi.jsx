@@ -21,7 +21,7 @@ const Eventi = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(API_BASE_URL);
+                const response = await axios.get(`${API_BASE_URL}/events`);
                 const eventsData = response.data.data || response.data;
                 setEvents(eventsData);
                 setFilteredEvents(eventsData);
@@ -71,7 +71,7 @@ const Eventi = () => {
     }, [filters, events]);
 
     const handlePrenota = (eventId) => {
-        navigate(`/prenota/${eventId}`);
+        navigate(`/events/${eventId}`);
     };
 
     const handleFilterChange = (e) => {
@@ -126,7 +126,7 @@ const Eventi = () => {
                             onChange={handleFilterChange}
                         >
                             <option value="">Tutte</option>
-                            <option value="musica">Musica</option>
+                            <option value="concerti">Concerti</option>
                             <option value="teatro">Teatro</option>
                             <option value="sport">Sport</option>
                             <option value="arte">Arte</option>
