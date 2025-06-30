@@ -18,9 +18,9 @@ const EventCard = ({ event }) => {
 
             <div className="event-card-content">
                 <h3>{event.title}</h3>
-                <p className="event-location">{event.location}</p>
+                <p className="event-home-location">{event.location}</p>
                 <div className="event-detail">
-                    <Link to={`/events/${event.id}`}>View Details</Link>
+                    <Link to={`/events/${event.id}`}>SCOPRI</Link>
                 </div>
             </div>
         </div>
