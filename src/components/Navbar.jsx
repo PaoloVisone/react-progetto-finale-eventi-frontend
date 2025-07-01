@@ -17,28 +17,58 @@ export default function Navbar() {
                     NextEvent
                 </NavLink>
 
-                {/* Burger menu sempre visibile */}
-                <button className={`burger-menu ${isOpen ? 'open' : ''}`} onClick={toggleMenu} aria-label="Menu">
+                {/* Menu Desktop - Visibile solo su desktop */}
+                <div className="desktop-menu">
+                    <NavLink to="/" end className={({ isActive }) => isActive ? "active" : ""}>
+                        Home
+                    </NavLink>
+                    <NavLink to="/events" className={({ isActive }) => isActive ? "active" : ""}>
+                        Eventi
+                    </NavLink>
+                    <NavLink to="/contacts" className={({ isActive }) => isActive ? "active" : ""}>
+                        Contatti
+                    </NavLink>
+                    {/* <NavLink to="/bookings" className={({ isActive }) => isActive ? "active" : ""}>
+                        Prenota
+                    </NavLink> */}
+                </div>
+
+                {/* Burger menu - Visibile solo su mobile/tablet */}
+                <button
+                    className={`burger-menu ${isOpen ? 'open' : ''}`}
+                    onClick={toggleMenu}
+                    aria-label="Menu"
+                >
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
 
-                {/* Sidebar */}
+                {/* Sidebar - Solo per mobile/tablet */}
                 <div className={`sidebar ${isOpen ? 'open' : ''}`}>
                     <div className="sidebar-content">
-                        <NavLink to="/" end onClick={toggleMenu} className={({ isActive }) => isActive ? "active" : ""}>
+                        <NavLink
+                            to="/"
+                            end
+                            onClick={toggleMenu}
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
                             Home
                         </NavLink>
-                        <NavLink to="/events" onClick={toggleMenu} className={({ isActive }) => isActive ? "active" : ""}>
+                        <NavLink
+                            to="/events"
+                            onClick={toggleMenu}
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
                             Eventi
                         </NavLink>
-                        <NavLink to="/contacts" onClick={toggleMenu} className={({ isActive }) => isActive ? "active" : ""}>
+                        <NavLink
+                            to="/contacts"
+                            onClick={toggleMenu}
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
                             Contatti
                         </NavLink>
-                        {/* <NavLink to="/bookings" onClick={toggleMenu} className={({ isActive }) => isActive ? "active" : ""}>
-                            Prenota
-                        </NavLink> */}
                     </div>
                 </div>
             </div>

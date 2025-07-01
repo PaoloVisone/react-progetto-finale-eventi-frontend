@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import '../css/ContactsForm.css';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -48,63 +51,67 @@ const ContactForm = () => {
     };
 
     return (
-        <div className="contact-form-container">
-            <h2>Contattaci</h2>
-
-            {submitStatus === 'success' && (
-                <div className="alert alert-success">
-                    Grazie! Il tuo messaggio è stato inviato con successo.
-                </div>
-            )}
-
-            {submitStatus === 'error' && (
-                <div className="alert alert-danger">
-                    Si è verificato un errore. Riprova più tardi.
-                </div>
-            )}
-
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Nome</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
+        <>
+            <div className="contact-form-container">
+                <div className="page-header">
+                    <FontAwesomeIcon icon={faEnvelope} className="header-icon" />
+                    <h1 className="page-title">Contattaci</h1>
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
 
-                <div className="form-group">
-                    <label htmlFor="message">Messaggio</label>
-                    <textarea
-                        id="message"
-                        name="message"
-                        rows="5"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                {submitStatus === 'success' && (
+                    <div className="alert alert-success">
+                        Grazie! Il tuo messaggio è stato inviato con successo.
+                    </div>
+                )}
 
-                <button className='contacts-button' type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Invio in corso...' : 'Invia Messaggio'}
-                </button>
-            </form>
-        </div>
+                {submitStatus === 'error' && (
+                    <div className="alert alert-danger">
+                        Si è verificato un errore. Riprova più tardi.
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="name">Nome</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="message">Messaggio</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            value={formData.message}
+                            onChange={handleChange}
+                            required />
+                    </div>
+
+                    <div class="button-container">
+                        <button className='contacts-button' type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? 'Invio in corso...' : 'Invia Messaggio'}
+                        </button>
+                    </div>
+                </form>
+            </div></>
     );
 };
 

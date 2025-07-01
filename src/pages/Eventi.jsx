@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTicket } from '@fortawesome/free-solid-svg-icons';
 import { API_BASE_URL } from '../api/config';
 import '../css/Eventi.css';
-import { useNavigate } from 'react-router-dom';
 
 const Eventi = () => {
     const [events, setEvents] = useState([]);
@@ -92,13 +94,25 @@ const Eventi = () => {
     };
 
     if (loading) {
-        return <div className="loading">Loading...</div>;
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner">
+                    <div className="loading-dot dot-1"></div>
+                    <div className="loading-dot dot-2"></div>
+                    <div className="loading-dot dot-3"></div>
+                </div>
+            </div>
+        );
     }
+
+    if (!events) return <div className="error-wrapper">Eventi non trovato</div>;
 
     return (
         <div className="eventi-page">
-            <h1 className="page-title">Tutti gli Eventi</h1>
-
+            <div className="page-header">
+                <FontAwesomeIcon icon={faTicket} className="header-icon" />
+                <h1 className="page-title">Seleziona il tuo Evento</h1>
+            </div>
             <div className="eventi-container">
                 {/* Sidebar filtri */}
                 <aside className="filters-sidebar">

@@ -1,6 +1,5 @@
-/* Simplified Enhanced Navbar.css */
 .navbar {
-    background: linear-gradient(135deg, #3c3c4076 0%, #7e7e7f61 100%);
+    background: #4b638480;
     padding: 1rem 0;
     position: sticky;
     top: 0;
@@ -18,19 +17,65 @@
 .logo {
     font-size: 1.75rem;
     font-weight: 800;
-    color: white;
+    color: #111827;
     text-decoration: none;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     z-index: 1002;
 }
 
 .logo:hover {
     transform: scale(1.05) translateY(-2px);
+    color: #4b6384;
 }
 
-/* Burger Menu */
-.burger-menu {
+/* Menu Desktop */
+.desktop-menu {
     display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.desktop-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.desktop-menu a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.desktop-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.desktop-menu a:hover::after,
+.desktop-menu a.active::after {
+    width: 80%;
+}
+
+.desktop-menu a.active {
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Burger Menu - Nascosto su Desktop */
+.burger-menu {
+    display: none;
     flex-direction: column;
     justify-content: space-between;
     width: 30px;
@@ -70,14 +115,14 @@
     transform: translateY(-10.5px) rotate(-45deg);
 }
 
-/* Sidebar */
+/* Sidebar - Nascosta su Desktop */
 .sidebar {
     position: fixed;
     top: 0;
     right: -100%;
     width: 35%;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
+    background: #4b6384;
     backdrop-filter: blur(10px);
     transition: right 0.3s ease;
     z-index: 1001;
@@ -135,6 +180,21 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+    .desktop-menu {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .sidebar {
+        width: 50%;
+    }
+}
+
 /* Mobile */
 @media (max-width: 768px) {
     .container {
@@ -143,6 +203,14 @@
 
     .logo {
         font-size: 1.5rem;
+    }
+
+    .desktop-menu {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
     }
 
     .sidebar {
