@@ -1,11 +1,12 @@
-/* Container styles */
+/* ===== CONTAINER PRINCIPALE ===== */
 .detail-container {
     max-width: 800px;
     margin: 2rem auto;
     padding: 0 1rem;
+    color: var(--text-dark);
 }
 
-/* Header styles */
+/* ===== HEADER EVENTO ===== */
 .event-header {
     margin-bottom: 2rem;
     text-align: center;
@@ -13,33 +14,39 @@
 
 .event-title-detail {
     font-size: 2.5rem;
-    color: #333;
+    font-weight: 700;
     margin-bottom: 0.5rem;
+    color: var(--text-dark);
 }
 
-/* Stili per l'immagine semplificata */
+/* ===== IMMAGINE EVENTO ===== */
 .event-detail-image {
     width: 100%;
     max-width: 900px;
     height: 500px;
     object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-heavy);
     margin: 2rem auto;
     display: block;
-    transition: transform 0.3s ease;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
 }
 
 .event-detail-image:hover {
     transform: translateY(-5px);
+    box-shadow: var(--shadow-heavy);
 }
 
-/* Detail section styles */
+/* ===== SEZIONE DETTAGLI ===== */
 .detail-section {
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
     padding: 2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    margin-top: 2rem;
 }
 
 .detail {
@@ -57,106 +64,165 @@
 }
 
 .detail-label {
-    font-weight: bold;
-    color: #555;
+    font-weight: 600;
+    color: var(--text-muted);
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .detail-value {
     font-size: 1.1rem;
-    color: #333;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
 }
 
-/* Badge styles */
+.seats-info {
+    display: flex;
+    gap: 10px;
+}
+
+/* ===== BADGES DISPONIBILITÀ ===== */
+
 .availability-badge {
-    background-color: #4caf50;
+    background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
     color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
     font-size: 0.8rem;
-    font-weight: bold;
+    font-weight: 600;
+    box-shadow: var(--shadow-light);
 }
 
 .availability-badge.warning {
-    background-color: #ff9800;
+    background: linear-gradient(135deg, var(--warning-color) 0%, #d97706 100%);
 }
 
 .unavailable-badge {
-    background-color: #f44336;
+    background: linear-gradient(135deg, var(--error-color) 0%, #b91c1c 100%);
     color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
     font-size: 0.8rem;
-    font-weight: bold;
+    font-weight: 600;
+    box-shadow: var(--shadow-light);
 }
 
-/* Button styles */
+/* ===== PULSANTE PRENOTAZIONE ===== */
 .booking-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 32px 0 24px 0;
+    margin: 2rem 0;
 }
 
 .book-button {
-    background: #4b6384;
-    color: #fff;
+    background: var(--button-gradient);
+    color: white;
     font-size: 1.15rem;
     font-weight: 600;
-    padding: 0.85em 2.2em;
+    padding: 1rem 2.5rem;
     border: none;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+    border-radius: 50px;
+    box-shadow: var(--shadow-medium);
     cursor: pointer;
-    transition: background 0.18s, box-shadow 0.18s, opacity 0.18s;
+    transition: var(--transition);
     text-decoration: none;
     outline: none;
     letter-spacing: 0.02em;
-    opacity: 1;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+
+.book-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s;
+}
+
+.book-button:hover:not(:disabled)::before {
+    left: 100%;
 }
 
 .book-button:hover:not(:disabled),
 .book-button:focus:not(:disabled) {
-    background: #4b6384;
-    box-shadow: 0 4px 20px rgba(25, 118, 210, 0.18);
-    opacity: 0.95;
+    background: var(--button-gradient-hover);
+    box-shadow: var(--shadow-heavy);
+    transform: translateY(-2px);
+}
+
+.book-button:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+    box-shadow: var(--shadow-medium);
 }
 
 .book-button:disabled {
-    background: #b0bec5;
-    color: #ececec;
+    background: linear-gradient(135deg, var(--border-color) 0%, var(--border-light) 100%);
+    color: var(--text-muted);
     cursor: not-allowed;
     opacity: 0.7;
     box-shadow: none;
+    transform: none;
 }
 
-/* Loading and error states */
+/* ===== STATI DI CARICAMENTO ===== */
 .loading-wrapper,
 .error-wrapper {
     text-align: center;
     padding: 2rem;
     font-size: 1.2rem;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    margin: 2rem 0;
 }
 
-/* Versione mobile */
+.loading-wrapper {
+    color: var(--text-muted);
+}
+
+.error-wrapper {
+    color: var(--error-color);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+    border-left: 4px solid var(--error-color);
+}
+
+/* ===== VERSIONE MOBILE ===== */
 @media (max-width: 768px) {
+    .detail-container {
+        padding: 0 0.5rem;
+    }
+
     .event-detail-image {
         height: 300px;
         margin: 1rem auto;
-        border-radius: 8px;
-        max-width: 100%;
+        border-radius: var(--border-radius-sm);
     }
 
     .detail-item {
         min-width: 100%;
     }
 
-    .event-title {
+    .event-title-detail {
         font-size: 2rem;
+    }
+
+    .detail-section {
+        padding: 1.5rem;
+    }
+
+    .book-button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
     }
 }

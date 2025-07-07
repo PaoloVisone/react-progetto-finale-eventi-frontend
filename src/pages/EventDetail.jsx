@@ -1,16 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+
 import { API_BASE_URL } from '../api/config';
 import '../css/EventDetail.css';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faSpinner } from '@fortawesome/free-solid-svg-icons';
+
+import LoadingDots from '../components/LoadingDots';
+import LoadingDotsError from '../components/LoadingDotsError';
 
 const EventDetail = () => {
     const { id } = useParams();
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [error, setError] = useState(null);
+
 
     // Funzione per caricare i dati dell'evento
     const fetchEvent = async () => {
@@ -23,8 +30,9 @@ const EventDetail = () => {
                 available_seats: eventData.capacity - (eventData.booked_seats || eventData.bookedSeats || 0)
             });
             setEvent(eventData);
-        } catch (error) {
-            console.error('Error fetching event:', error);
+        } catch (err) {
+            console.error('Error fetching events:', err);
+            setError("Errore nel caricamento dell'evento");
         } finally {
             setLoading(false);
             setRefreshing(false);
@@ -81,18 +89,12 @@ const EventDetail = () => {
         : 'Gratuito';
 
     if (loading) {
-        return (
-            <div className="loading-container">
-                <div className="loading-spinner">
-                    <div className="loading-dot dot-1"></div>
-                    <div className="loading-dot dot-2"></div>
-                    <div className="loading-dot dot-3"></div>
-                </div>
-            </div>
-        );
+        return <LoadingDots />;
     }
 
-    if (!event) return <div className="error-wrapper">Evento non trovato</div>;
+    if (error || !event || event.length === 0) {
+        return <LoadingDotsError error={error || "Nessun evento disponibile"} />;
+    }
 
     return (
         <div className="detail-container">
