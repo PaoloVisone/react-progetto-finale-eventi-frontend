@@ -1,144 +1,3 @@
-/* ===== LAYOUT PRINCIPALE ===== */
-.booking-page {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 2rem 1rem;
-}
-
-.booking-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* ===== HEADER ===== */
-.page-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.header-icon {
-    font-size: 3rem;
-    color: #4f46e5;
-    margin-bottom: 1rem;
-}
-
-.page-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0;
-}
-
-/* ===== LAYOUT A DUE COLONNE ===== */
-.booking-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-}
-
-/* ===== COLONNA DETTAGLI EVENTO ===== */
-.event-details-column {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-/* Immagine evento */
-.event-image-book-container {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    background: #fff;
-}
-
-.event-image-book {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    display: block;
-}
-
-.event-image-placeholder {
-    width: 100%;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-size: 4rem;
-}
-
-/* Card informazioni evento */
-.event-info-card {
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e5e7eb;
-}
-
-.event-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0 0 1rem 0;
-    line-height: 1.2;
-}
-
-.event-description {
-    color: #6b7280;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-}
-
-/* Lista dettagli evento */
-.event-details-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.detail-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
-.detail-icon {
-    color: #4f46e5;
-    font-size: 1.2rem;
-    margin-top: 0.2rem;
-    flex-shrink: 0;
-}
-
-.detail-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.detail-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.detail-value {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1f2937;
-}
-
-.seats-warning {
-    color: #dc2626 !important;
-    font-weight: 700;
-}
-
 /* ===== COLONNA FORM ===== */
 .booking-form-column {
     position: sticky;
@@ -146,18 +5,19 @@
 }
 
 .booking-form-card {
-    background: white;
-    border-radius: 16px;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
     padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e5e7eb;
+    box-shadow: var(--shadow-heavy);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
 }
 
 .form-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1f2937;
     margin: 0 0 2rem 0;
+    text-align: center;
 }
 
 /* ===== FORM STYLING ===== */
@@ -168,17 +28,17 @@
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .form-label {
-    font-size: 0.875rem;
+    display: block;
+    margin-bottom: 0.75rem;
     font-weight: 600;
-    color: #374151;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
 }
 
 .input-container {
@@ -189,233 +49,45 @@
 
 .form-input {
     width: 100%;
-    padding: 0.875rem 1rem 0.875rem 2.75rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
+    padding: 1rem 1.25rem 1rem 3rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-family: inherit;
     font-size: 1rem;
-    transition: all 0.2s ease;
-    background: #fafafa;
+    background: var(--bg-secondary);
+    color: var(--text-dark);
+    transition: var(--transition);
+    box-sizing: border-box;
 }
 
 .form-input:focus {
+    border-color: var(--primary-color);
     outline: none;
-    border-color: #4f46e5;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background: var(--bg-dark);
+    transform: translateY(-1px);
+}
+
+.form-input:hover:not(:focus) {
+    border-color: var(--border-light);
+    background: var(--bg-dark);
 }
 
 .form-input::placeholder {
-    color: #9ca3af;
+    color: var(--text-muted);
+    transition: var(--transition);
 }
 
-/* ===== RIEPILOGO PREZZO ===== */
-.price-summary-card {
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-top: 1rem;
-}
-
-.summary-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 1rem 0;
-}
-
-.summary-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    color: #6b7280;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.summary-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0 0 0;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1f2937;
-}
-
-/* ===== ALERT MESSAGGI ===== */
-.alert {
-    padding: 1rem;
-    border-radius: 12px;
-    font-weight: 500;
-    margin: 1rem 0;
-}
-
-.alert-error {
-    background: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fecaca;
-}
-
-.alert-success {
-    background: #f0fdf4;
-    color: #16a34a;
-    border: 1px solid #bbf7d0;
-}
-
-/* ===== PULSANTE SUBMIT ===== */
-.submit-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    width: 100%;
-    padding: 1rem 2rem;
-    background: #4b6384;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-}
-
-.submit-button:hover:not(:disabled) {
+.form-input:focus::placeholder {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
-}
-
-.submit-button:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-.submit-button:disabled {
     opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
+    font-size: 0.9rem;
 }
 
-.submit-button.loading {
-    background: #6b7280;
-}
-
-.button-icon {
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
     font-size: 1.2rem;
-}
-
-/* ===== STATI DI CARICAMENTO ===== */
-.loading-spinner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50vh;
-    font-size: 1.2rem;
-    color: #6b7280;
-}
-
-.error-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50vh;
-    font-size: 1.2rem;
-    color: #dc2626;
-    background: #fef2f2;
-    border-radius: 12px;
-    padding: 2rem;
-    margin: 2rem;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 1024px) {
-    .booking-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .booking-form-column {
-        position: static;
-    }
-
-    .page-title {
-        font-size: 2rem;
-    }
-
-    .event-title {
-        font-size: 1.75rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .booking-page {
-        padding: 1rem 0.5rem;
-    }
-
-    .booking-container {
-        max-width: 100%;
-    }
-
-    .page-header {
-        margin-bottom: 2rem;
-    }
-
-    .page-title {
-        font-size: 1.75rem;
-    }
-
-    .header-icon {
-        font-size: 2.5rem;
-    }
-
-    .event-info-card,
-    .booking-form-card {
-        padding: 1.5rem;
-    }
-
-    .event-image,
-    .event-image-placeholder {
-        height: 200px;
-    }
-
-    .event-title {
-        font-size: 1.5rem;
-    }
-
-    .booking-content {
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .booking-page {
-        padding: 0.5rem;
-    }
-
-    .page-title {
-        font-size: 1.5rem;
-    }
-
-    .event-info-card,
-    .booking-form-card {
-        padding: 1rem;
-    }
-
-    .form-input {
-        padding: 0.75rem 1rem 0.75rem 2.5rem;
-    }
-
-    .submit-button {
-        padding: 0.875rem 1.5rem;
-        font-size: 1rem;
-    }
-
-    .detail-item {
-        gap: 0.75rem;
-    }
-
-    .detail-icon {
-        font-size: 1rem;
-    }
+    z-index: 1;
 }
