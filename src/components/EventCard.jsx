@@ -20,7 +20,7 @@ const EventCard = ({ event }) => {
                 <h3>{event.title}</h3>
                 <p className="event-home-location">{event.location}</p>
                 <div className="event-detail">
-                    <Link to={`/events/${event.id}`}>SCOPRI</Link>
+                    <Link to={`/events/${event.id}`}>Dettagli Evento</Link>
                 </div>
             </div>
         </div>

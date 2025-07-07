@@ -17,7 +17,8 @@
 .logo {
     font-size: 1.75rem;
     font-weight: 800;
-    color: #111827;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     text-decoration: none;
     transition: all 0.3s ease;
     z-index: 1002;
@@ -25,7 +26,12 @@
 
 .logo:hover {
     transform: scale(1.05) translateY(-2px);
-    color: #4b6384;
+    color: #111827;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logo .logo-event {
+    color: #d97706;
 }
 
 /* Menu Desktop */

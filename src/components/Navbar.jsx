@@ -14,7 +14,7 @@ export default function Navbar() {
         <nav className="navbar">
             <div className="container">
                 <NavLink to="/" className="logo">
-                    NextEvent
+                    Next<span className="logo-event">Event</span>
                 </NavLink>
 
                 {/* Menu Desktop - Visibile solo su desktop */}
@@ -28,9 +28,6 @@ export default function Navbar() {
                     <NavLink to="/contacts" className={({ isActive }) => isActive ? "active" : ""}>
                         Contatti
                     </NavLink>
-                    {/* <NavLink to="/bookings" className={({ isActive }) => isActive ? "active" : ""}>
-                        Prenota
-                    </NavLink> */}
                 </div>
 
                 {/* Burger menu - Visibile solo su mobile/tablet */}
