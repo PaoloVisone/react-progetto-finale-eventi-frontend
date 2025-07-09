@@ -338,6 +338,16 @@
     border: 1px solid var(--primary-color);
 }
 
+/* .form-input.error {
+    border-color: #ef4444;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+} */
+
 @media (max-width: 768px) {
     .payment-form-card {
         padding: 20px;

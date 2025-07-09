@@ -2,14 +2,15 @@
 :root {
     --primary-color: #dc2626;
     --secondary-color: #eab308;
-    --accent-color: #f59e0b;
+    --accent-color: #d97706;
+    --success-color: #059669;
     --text-dark: #f8fafc;
     --bg-light: #1f2937;
     --bg-white: #111827;
     --text-muted: #94a3b8;
     --bg-dark: #111827;
     --bg-secondary: #1f2937;
-    --bg-card: #374151;
+    --bg-card: #212e44;
     --border-color: #4b5563;
     --border-light: #6b7280;
     --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3);

@@ -23,7 +23,7 @@ const Booking = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [paymentStep, setPaymentStep] = useState('form'); // 'form', 'payment', 'confirmation'
+    const [paymentStep, setPaymentStep] = useState('form');
     const [paymentMethod, setPaymentMethod] = useState('');
     const [paymentProcessing, setPaymentProcessing] = useState(false);
     const [event, setEvent] = useState(null);
@@ -116,31 +116,32 @@ const Booking = () => {
         setStatus('idle');
     };
 
-    // Processo di pagamento (fake) e invio dati al backend
+    // Mappa i metodi di pagamento frontend -> backend
+    const mapPaymentMethodToBackend = (method) => {
+        switch (method) {
+            case 'credit': return 'credit_card';
+            case 'paypal': return 'paypal';
+            case 'bank': return 'bank_transfer';
+            default: return null;
+        }
+    };
+
+    // Processo di pagamento
     const processPayment = async () => {
         setPaymentProcessing(true);
         setStatus('loading');
 
         try {
-            // Simula ritardo pagamento
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
             // Prepara i dati per il backend
             const payload = {
+                ...formData,
                 event_id: parseInt(id, 10),
-                user_name: formData.user_name,
-                user_email: formData.user_email,
-                user_phone: formData.user_phone || "",
-                tickets: parseInt(formData.tickets, 10)
+                tickets: parseInt(formData.tickets, 10),
+                payment_method: mapPaymentMethodToBackend(paymentMethod)
             };
 
             // Invia i dati al backend
-            const response = await axios.post(`${API_BASE_URL}/bookings`, payload, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            });
+            const response = await axios.post(`${API_BASE_URL}/bookings`, payload);
 
             if (!response.data.success) {
                 throw new Error(response.data.message || 'Errore nel server');
@@ -148,15 +149,14 @@ const Booking = () => {
 
             // Crea i dettagli per la conferma
             const bookingData = {
-                ...payload,
-                bookingId: response.data.bookingId || Math.floor(Math.random() * 1000000),
+                ...response.data.data,
                 eventTitle: event.title,
                 eventDate: event.date_time,
                 totalPrice: event.price * payload.tickets,
                 paymentMethod: getPaymentMethodName(paymentMethod)
             };
 
-            // Invia email di conferma
+            // Invia email di conferma (se necessario)
             await sendConfirmationEmail(bookingData);
 
             // Aggiorna stato e mostra conferma
@@ -169,15 +169,6 @@ const Booking = () => {
                 ...prev,
                 booked_seats: prev.booked_seats + payload.tickets
             }));
-
-            // Resetta il form SOLO dopo conferma pagamento
-            setFormData({
-                event_id: id,
-                user_name: '',
-                user_email: '',
-                user_phone: '',
-                tickets: 1
-            });
 
         } catch (error) {
             console.error("Errore nel pagamento:", error);
@@ -219,22 +210,22 @@ const Booking = () => {
                 }),
                 tickets: bookingData.tickets,
                 total_price: bookingData.totalPrice.toFixed(2),
-                booking_id: bookingData.bookingId,
+                booking_id: bookingData.id,
                 payment_method: bookingData.paymentMethod
             };
 
             // Esempio con EmailJS - sostituisci con i tuoi ID
-            await window.emailjs.send(
-                'YOUR_SERVICE_ID',
-                'YOUR_TEMPLATE_ID',
-                templateParams,
-                'YOUR_USER_ID'
-            );
-
-            console.log('Email inviata con successo');
+            if (window.emailjs) {
+                await window.emailjs.send(
+                    'YOUR_SERVICE_ID',
+                    'YOUR_TEMPLATE_ID',
+                    templateParams,
+                    'YOUR_USER_ID'
+                );
+                console.log('Email inviata con successo');
+            }
         } catch (error) {
             console.error('Errore nell\'invio dell\'email:', error);
-            // Non blocchiamo il flusso se l'email fallisce
         }
     };
 
@@ -297,7 +288,7 @@ const Booking = () => {
                         <div className="event-image-book-container">
                             {event.image ? (
                                 <img
-                                    src={`http://127.0.0.1:8000/storage/${event.image}`}
+                                    src={event.image ? `http://127.0.0.1:8000/storage/${event.image}` : '/placeholder-event.jpg'}
                                     alt={event.title}
                                     className="event-image-book"
                                 />

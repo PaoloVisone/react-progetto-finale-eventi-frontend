@@ -31,7 +31,6 @@ const ConfirmationModal = ({
 
                     <div className="booking-summary">
                         <div className="summary-header">
-                            <FontAwesomeIcon icon={faTicket} className="summary-icon" />
                             <h3>Dettagli Prenotazione</h3>
                         </div>
 

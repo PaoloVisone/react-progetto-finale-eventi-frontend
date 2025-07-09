@@ -5,7 +5,6 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.8);
-    /* Più scuro per contrasto */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -116,7 +115,7 @@
 
 .summary-header {
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 12px;
     margin-bottom: 25px;
 }

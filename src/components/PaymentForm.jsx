@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCreditCard, faBuilding, faCalendarAlt, faLock, faEuroSign, faSpinner, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faCreditCard, faBuilding, faLock, faEuroSign, faSpinner, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
 import '../css/PaymentForm.css';
 
@@ -19,10 +19,10 @@ const PaymentForm = ({
         cardNumber: '',
         expiryDate: '',
         cvv: '',
-        cardName: ''
+        cardName: formData.user_name || ''
     });
 
-    const handleCreditCardChange = (e) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         setCreditCardData(prev => ({
             ...prev,
@@ -30,13 +30,72 @@ const PaymentForm = ({
         }));
     };
 
-    const formatCardNumber = (value) => {
-        return value.replace(/\s+/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+    // Validazione semplificata
+    const validateInputs = () => {
+        if (paymentMethod !== 'credit') return true;
+
+        const errors = {};
+        let isValid = true;
+
+        // Validazione numero carta (almeno 12 cifre)
+        if (!creditCardData.cardNumber || creditCardData.cardNumber.replace(/\D/g, '').length < 12) {
+            errors.cardNumber = 'Inserisci un numero di carta valido';
+            isValid = false;
+        }
+
+        // Validazione data scadenza (formato MM/AA)
+        if (!creditCardData.expiryDate || !/^\d{2}\/\d{2}$/.test(creditCardData.expiryDate)) {
+            errors.expiryDate = 'Formato data non valido (MM/AA)';
+            isValid = false;
+        }
+
+        // Validazione CVV (3 o 4 cifre)
+        if (!creditCardData.cvv || !/^\d{3,4}$/.test(creditCardData.cvv)) {
+            errors.cvv = 'CVV non valido';
+            isValid = false;
+        }
+
+        // Validazione nome (almeno 2 caratteri)
+        if (!creditCardData.cardName || creditCardData.cardName.trim().length < 2) {
+            errors.cardName = 'Nome sulla carta non valido';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            alert(Object.values(errors).join('\n'));
+            return false;
+        }
+
+        return true;
     };
 
+    const handleSubmit = async () => {
+        if (paymentMethod === 'credit' && !validateInputs()) {
+            return;
+        }
+
+        const paymentData = {
+            ...formData,
+            tickets: parseInt(formData.tickets),
+            payment_method: paymentMethod === 'credit' ? 'credit_card' :
+                paymentMethod === 'paypal' ? 'paypal' : 'bank_transfer',
+            card_details: paymentMethod === 'credit' ? creditCardData : null
+        };
+
+        await onProcessPayment(paymentData);
+    };
+
+    // Formattazione automatica del numero di carta
+    const formatCardNumber = (value) => {
+        return value.replace(/\D/g, '')
+            .replace(/(\d{4})(?=\d)/g, '$1 ')
+            .slice(0, 19);
+    };
+
+    // Formattazione automatica della data di scadenza
     const formatExpiryDate = (value) => {
         const cleanValue = value.replace(/\D/g, '');
-        if (cleanValue.length >= 2) {
+        if (cleanValue.length > 2) {
             return cleanValue.slice(0, 2) + '/' + cleanValue.slice(2, 4);
         }
         return cleanValue;
@@ -50,53 +109,31 @@ const PaymentForm = ({
             </div>
 
             <div className="payment-methods">
-                <div
-                    className={`payment-method ${paymentMethod === 'credit' ? 'selected' : ''}`}
-                    onClick={() => setPaymentMethod('credit')}
-                >
-                    <div className="payment-icon">
-                        <FontAwesomeIcon icon={faCreditCard} />
+                {['credit', 'paypal', 'bank'].map(method => (
+                    <div
+                        key={method}
+                        className={`payment-method ${paymentMethod === method ? 'selected' : ''}`}
+                        onClick={() => setPaymentMethod(method)}
+                    >
+                        <div className="payment-icon">
+                            <FontAwesomeIcon icon={
+                                method === 'credit' ? faCreditCard :
+                                    method === 'paypal' ? faPaypal : faBuilding
+                            } />
+                        </div>
+                        <div className="payment-info">
+                            <h4>
+                                {method === 'credit' ? 'Carta di credito' :
+                                    method === 'paypal' ? 'PayPal' : 'Bonifico bancario'}
+                            </h4>
+                            <p>
+                                {method === 'credit' ? 'Visa, Mastercard' :
+                                    method === 'paypal' ? 'Paga con PayPal' : 'Pagamento in 3 giorni'}
+                            </p>
+                        </div>
+                        {paymentMethod === method && <div className="check-mark">✓</div>}
                     </div>
-                    <div className="payment-info">
-                        <h4>Carta di credito</h4>
-                        <p>Visa, Mastercard, American Express</p>
-                    </div>
-                    <div className="payment-check">
-                        {paymentMethod === 'credit' && <div className="check-mark">✓</div>}
-                    </div>
-                </div>
-
-                <div
-                    className={`payment-method ${paymentMethod === 'paypal' ? 'selected' : ''}`}
-                    onClick={() => setPaymentMethod('paypal')}
-                >
-                    <div className="payment-icon">
-                        <FontAwesomeIcon icon={faPaypal} />
-                    </div>
-                    <div className="payment-info">
-                        <h4>PayPal</h4>
-                        <p>Paga con il tuo account PayPal</p>
-                    </div>
-                    <div className="payment-check">
-                        {paymentMethod === 'paypal' && <div className="check-mark">✓</div>}
-                    </div>
-                </div>
-
-                <div
-                    className={`payment-method ${paymentMethod === 'bank' ? 'selected' : ''}`}
-                    onClick={() => setPaymentMethod('bank')}
-                >
-                    <div className="payment-icon">
-                        <FontAwesomeIcon icon={faBuilding} />
-                    </div>
-                    <div className="payment-info">
-                        <h4>Bonifico bancario</h4>
-                        <p>Pagamento entro 3 giorni lavorativi</p>
-                    </div>
-                    <div className="payment-check">
-                        {paymentMethod === 'bank' && <div className="check-mark">✓</div>}
-                    </div>
-                </div>
+                ))}
             </div>
 
             {paymentMethod && (
@@ -112,61 +149,51 @@ const PaymentForm = ({
                                     type="text"
                                     name="cardNumber"
                                     value={formatCardNumber(creditCardData.cardNumber)}
-                                    onChange={(e) => handleCreditCardChange({
+                                    onChange={(e) => handleInputChange({
                                         target: {
                                             name: 'cardNumber',
-                                            value: e.target.value.replace(/\s/g, '').slice(0, 16)
+                                            value: e.target.value
                                         }
                                     })}
                                     className="form-input"
                                     placeholder="1234 5678 9012 3456"
                                     maxLength="19"
-                                    required
                                 />
                             </div>
 
                             <div className="form-row">
                                 <div className="form-group">
                                     <label className="form-label">
-                                        <FontAwesomeIcon icon={faCalendarAlt} className="label-icon" />
                                         Scadenza
                                     </label>
                                     <input
                                         type="text"
                                         name="expiryDate"
                                         value={formatExpiryDate(creditCardData.expiryDate)}
-                                        onChange={(e) => handleCreditCardChange({
+                                        onChange={(e) => handleInputChange({
                                             target: {
                                                 name: 'expiryDate',
-                                                value: e.target.value.replace(/\D/g, '').slice(0, 4)
+                                                value: e.target.value
                                             }
                                         })}
                                         className="form-input"
                                         placeholder="MM/AA"
                                         maxLength="5"
-                                        required
                                     />
                                 </div>
 
                                 <div className="form-group">
                                     <label className="form-label">
-                                        <FontAwesomeIcon icon={faLock} className="label-icon" />
                                         CVV
                                     </label>
                                     <input
                                         type="text"
                                         name="cvv"
                                         value={creditCardData.cvv}
-                                        onChange={(e) => handleCreditCardChange({
-                                            target: {
-                                                name: 'cvv',
-                                                value: e.target.value.replace(/\D/g, '').slice(0, 3)
-                                            }
-                                        })}
+                                        onChange={handleInputChange}
                                         className="form-input"
                                         placeholder="123"
-                                        maxLength="3"
-                                        required
+                                        maxLength="4"
                                     />
                                 </div>
                             </div>
@@ -177,10 +204,9 @@ const PaymentForm = ({
                                     type="text"
                                     name="cardName"
                                     value={creditCardData.cardName}
-                                    onChange={handleCreditCardChange}
+                                    onChange={handleInputChange}
                                     className="form-input"
-                                    placeholder={formData.user_name}
-                                    required
+                                    placeholder="Nome come sulla carta"
                                 />
                             </div>
                         </div>
@@ -188,44 +214,14 @@ const PaymentForm = ({
 
                     {paymentMethod === 'paypal' && (
                         <div className="paypal-info">
-                            <div className="payment-info-card">
-                                <FontAwesomeIcon icon={faPaypal} className="info-icon" />
-                                <h4>Pagamento con PayPal</h4>
-                                <p>Verrai reindirizzato al sito PayPal per completare il pagamento in sicurezza.</p>
-                                <div className="payment-amount">
-                                    <strong>Importo: €{totalPrice.toFixed(2)}</strong>
-                                </div>
-                            </div>
+                            <p>Sarai reindirizzato a PayPal per completare il pagamento.</p>
                         </div>
                     )}
 
                     {paymentMethod === 'bank' && (
                         <div className="bank-info">
-                            <div className="payment-info-card">
-                                <FontAwesomeIcon icon={faBuilding} className="info-icon" />
-                                <h4>Dettagli per il bonifico</h4>
-                                <div className="bank-details">
-                                    <div className="detail-row">
-                                        <span className="detail-label">Beneficiario:</span>
-                                        <span className="detail-value">Events Management SRL</span>
-                                    </div>
-                                    <div className="detail-row">
-                                        <span className="detail-label">IBAN:</span>
-                                        <span className="detail-value">IT60 X054 2811 1010 0000 0123 456</span>
-                                    </div>
-                                    <div className="detail-row">
-                                        <span className="detail-label">Causale:</span>
-                                        <span className="detail-value">Prenotazione #{Math.floor(Math.random() * 1000000)}</span>
-                                    </div>
-                                    <div className="detail-row">
-                                        <span className="detail-label">Importo:</span>
-                                        <span className="detail-value">€{totalPrice.toFixed(2)}</span>
-                                    </div>
-                                </div>
-                                <div className="bank-note">
-                                    <small>⚠️ Il pagamento deve essere effettuato entro 3 giorni lavorativi</small>
-                                </div>
-                            </div>
+                            <p>IBAN: IT60 X054 2811 1010 0000 0123 456</p>
+                            <p>Importo: €{totalPrice.toFixed(2)}</p>
                         </div>
                     )}
                 </div>
@@ -250,7 +246,7 @@ const PaymentForm = ({
 
                 <button
                     className={`submit-button ${paymentProcessing ? 'loading' : ''}`}
-                    onClick={onProcessPayment}
+                    onClick={handleSubmit}
                     disabled={!paymentMethod || paymentProcessing}
                 >
                     {paymentProcessing ? (

@@ -1,6 +1,5 @@
 .no-scroll {
     overflow: hidden;
-    /* Opzionale: previene lo spostamento del contenuto quando la scrollbar scompare */
     padding-right: calc(100vw - 100%);
 }
 
