@@ -1,12 +1,28 @@
-# React + Vite
+#  🎉 Progetto Finale Eventi – Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Una moderna interfaccia frontend in **React** per gestire eventi: crea, visualizza e naviga con facilità nel breaf di un’interfaccia elegante.
 
-Currently, two official plugins are available:
+[![Live Demo](https://img.shields.io/badge/🔗%20Live%20Demo-NON_DISPONIBILE-gray?style=for-the-badge)](#)  
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)  
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)  
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+##  Overview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Il frontend è stato realizzato con **React + Vite**, con un design pulito e reattivo che si integra perfettamente con un backend RESTful per la gestione completa di eventi.
+
+### Caratteristiche chiave:
+- Navigazione intuitiva con schermate per elencare, creare e modificare eventi  
+- Design **responsive** e mobile-first  
+- Connessione fluida a un backend API (Laravel)  
+
+---
+
+##  Tech Stack
+
+- **Frontend:** React + Vite  
+- **Styling:** CSS moderno
+- **Linting:** ESLint per codifica pulita  
+- **Architettura:** Componenti modulari, routing, chiamate API con fetch o axios  
