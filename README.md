@@ -2,7 +2,6 @@
 
 > Una moderna interfaccia frontend in **React** per gestire eventi: crea, visualizza e naviga con facilità nel breaf di un’interfaccia elegante.
 
-[![Live Demo](https://img.shields.io/badge/🔗%20Live%20Demo-NON_DISPONIBILE-gray?style=for-the-badge)](#)  
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)  
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)  
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
